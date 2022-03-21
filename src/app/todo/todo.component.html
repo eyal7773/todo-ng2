@@ -12,5 +12,8 @@
 <hr>
 <h3>Your Tasks: </h3>
 <ul>
-    <li *ngFor="let t of tasks">{{ t }}</li>
+    <li *ngFor="let t of tasks">
+        {{ t }}
+        <button (click)="handleRemove(t)">Remove</button>
+    </li>
 </ul>
