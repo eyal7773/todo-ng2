@@ -8,12 +8,50 @@
     <input type="text" ngModel name="task">
     <button type="submit">Add Task</button>
 </form>
+<hr>
+<div>
+    <label for="search">
+        Search: 
+        <input type="text" #searchText (keyup)="handleSearch(searchText.value)"  >
+
+    </label>
+</div>
 
 <hr>
+
 <h3>Your Tasks: </h3>
-<ul>
+<!-- <ul>
     <li *ngFor="let t of tasks">
         {{ t }}
         <button (click)="handleRemove(t)">Remove</button>
     </li>
-</ul>
+</ul> -->
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <td>Task 
+                <span class="sortButton" [class.isSorted]="sort == SortEnum.ASC"  (click)="handleSort(SortEnum.ASC)" >&uarr;</span>
+                <span class="sortButton" [class.isSorted]="sort == SortEnum.DESC"   (click)="handleSort(SortEnum.DESC)"  >&#8595;</span>
+                </td>
+            <td>Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of tasks"   [hidden]="!t.isVisible" >
+            <!-- משימה-->
+            <td>  
+                <span *ngIf="!t.isUpdated">{{t.name }}</span>
+                <span *ngIf="t.isUpdated">
+                    <!-- טופס עריכה`-->
+                    <input type="text" name="newTask" #newTask value="{{ t.name }}" >
+                    <button type="submit" (click)="handleFinishUpdate(t.name,newTask.value)">Update</button>
+                </span>
+            </td>
+            <!-- כפתורים-->
+            <td>
+                <button (click)="handleRemove(t.name)">Remove</button>
+                <button (click)="handleUpdate(t)">Update</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
