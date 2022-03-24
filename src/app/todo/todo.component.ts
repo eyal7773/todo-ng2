@@ -24,6 +24,8 @@ export class TodoComponent implements OnInit {
   /** מערך עבור המשימות */
   tasks:Task[] = [];
 
+  readonly TASKS_KEY = 'tasks';
+
   SortEnum = SortOptions;
   sort:SortOptions = SortOptions.NONE;
 
@@ -31,6 +33,13 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let savedTasksJson = localStorage.getItem(this.TASKS_KEY);
+
+    if (savedTasksJson != null) {
+      this.tasks = JSON.parse(savedTasksJson);
+    }
+
   }
 
   handleSubmit(addForm:NgForm){
@@ -113,6 +122,47 @@ export class TodoComponent implements OnInit {
       task.isVisible = (task.name.includes(v));
     });
   }
+
+
+
+  handleSave() :void {
+    localStorage.setItem(this.TASKS_KEY,JSON.stringify(this.tasks));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
